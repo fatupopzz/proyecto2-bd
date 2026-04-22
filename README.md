@@ -46,6 +46,38 @@ Eso es todo. Docker levanta los 3 servicios automáticamente:
 
 ## Estructura del proyecto
 
+    proyecto2/
+    ├── docker-compose.yml
+    ├── .env.example
+    ├── docker/
+    │   └── init.sql
+    ├── backend/
+    │   ├── Dockerfile
+    │   ├── index.js
+    │   ├── db/pool.js
+    │   ├── middleware/auth.js
+    │   └── routes/
+    │       ├── auth.js
+    │       ├── productos.js
+    │       ├── ventas.js
+    │       ├── clientes.js
+    │       ├── empleados.js
+    │       ├── categorias.js
+    │       ├── proveedores.js
+    │       └── reportes.js
+    └── frontend/
+        └── src/
+            ├── App.js
+            ├── api.js
+            ├── components/Navbar.js
+            └── pages/
+                ├── Login.js
+                ├── Dashboard.js
+                ├── Productos.js
+                ├── Clientes.js
+                ├── Ventas.js
+                └── Reportes.js
+
 ## Funcionalidades
 
 ### I. Diseño de BD (40pts)
