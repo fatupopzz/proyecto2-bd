@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: proy2_db
+    environment:
+      POSTGRES_USER: proy2
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: tienda_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U proy2 -d tienda_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: proy2_backend
+    environment:
+      DB_USER: proy2
+      DB_PASSWORD: secret
+      DB_NAME: tienda_db
+      DB_HOST: db
+      DB_PORT: 5432
+      JWT_SECRET: supersecretjwtkey123
+      PORT: 4000
+    ports:
+      - "4000:4000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build: ./frontend
+    container_name: proy2_frontend
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
